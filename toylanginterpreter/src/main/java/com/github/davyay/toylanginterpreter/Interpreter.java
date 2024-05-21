@@ -11,10 +11,11 @@ public class Interpreter {
             for (Stmt statement : statements) {
                 execute(statement);
             }
-            symbolTable.print();
         } catch (RuntimeException error) {
-            System.err.println(error.getMessage());
+            System.err.println("Error: " + error.getMessage());
+            return;
         }
+        symbolTable.print();
     }
 
     private void execute(Stmt stmt) {
@@ -60,9 +61,13 @@ public class Interpreter {
             case "*":
                 return (int) left * (int) right;
             case "/":
+                if ((int) right == 0) {
+                    throw new RuntimeException("Division by zero");
+                }
                 return (int) left / (int) right;
+            default:
+                throw new RuntimeException("Unknown operator: " + expr.operator.getValue());
         }
-        throw new RuntimeException("Unknown operator");
     }
 
     private Object evaluateUnaryExpr(Unary expr) {
@@ -81,6 +86,9 @@ public class Interpreter {
     }
 
     private Object evaluateVariableExpr(Variable expr) {
+        if (!symbolTable.isDefined(expr.name)) {
+            throw new RuntimeException("Uninitialized variable '" + expr.name + "'");
+        }
         return symbolTable.get(expr.name);
     }
 
