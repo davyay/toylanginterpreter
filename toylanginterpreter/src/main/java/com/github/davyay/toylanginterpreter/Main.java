@@ -34,12 +34,6 @@ public class Main {
                 Tokenizer tokenizer = new Tokenizer(source);
                 List<Token> tokens = tokenizer.getTokens();
 
-                // Print tokens for debugging
-                System.out.println("Tokens:");
-                for (Token token : tokens) {
-                    System.out.println(token);
-                }
-
                 Parser parser = new Parser(tokens);
                 List<Stmt> statements = parser.parse();
                 interpreter.interpret(statements);
