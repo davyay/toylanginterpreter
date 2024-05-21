@@ -3,7 +3,6 @@ package com.github.davyay.toylanginterpreter;
 // Interface for statements
 interface Stmt {}
 
-// Expression statement
 class Expression implements Stmt {
     final Expr expression;
 
@@ -12,7 +11,6 @@ class Expression implements Stmt {
     }
 }
 
-// Assignment statement
 class Assignment implements Stmt {
     final String name;
     final Expr value;
